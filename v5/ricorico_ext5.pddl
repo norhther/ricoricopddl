@@ -6,6 +6,8 @@
 
   (:functions
    (calorias ?plato - plato)
+   (coste-plato ?plato - plato)
+   (coste-menu)
   )
 
     (:predicates (es-incompatible ?x - primero ?y - segundo)
@@ -22,10 +24,12 @@
       (not (exists (?dia - dia) (and (dia-pegado ?dia ?z) (or (dia-con-tipo ?dia ?tipop) (dia-con-tipo ?dia ?tiposeg)))))
       (not (exists (?plato - plato) (and (plato-del-dia ?plato ?z) (not (= ?x ?plato)) (not (= ?y ?plato)) )))
       (and (<= (+ (calorias ?x) (calorias ?y)) 1500) (>= (+ (calorias ?x) (calorias ?y)) 1000) )
+
     )
 
     :effect (and (dia-completo ?z) (asignado-dia ?z ?x) (asignado-dia ?z ?y) (esta-usado ?x) (esta-usado ?y) (dia-con-tipo ?z ?tipop)
-      (dia-con-tipo ?z ?tiposeg)
+      (dia-con-tipo ?z ?tiposeg) (increase (coste-menu) (+ (coste-plato ?x) (coste-plato ?y)))
+
     )
 
   )
